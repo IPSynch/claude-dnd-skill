@@ -1,0 +1,5 @@
+{
+  "env": {
+    "DND_CAMPAIGN_ROOT": "${CLAUDE_PROJECT_DIR}"
+  }
+}
