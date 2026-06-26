@@ -1,6 +1,6 @@
 ---
 name: dnd
-description: "v2.2.1 · Dungeon Master assistant for running persistent D&D 5e campaigns. Handles campaign creation/loading, character management, combat tracking, NPC generation, dice rolling, and session state — all persisted across sessions. Invoke with /dm:dnd followed by a subcommand, or just speak naturally once a campaign is loaded."
+description: "v2.3.0 · Dungeon Master assistant for running persistent D&D 5e campaigns. Handles campaign creation/loading, importing modules and adapting novels into campaigns, character management, combat tracking, NPC generation, dice rolling, and session state — all persisted across sessions. Invoke with /dm:dnd followed by a subcommand, or just speak naturally once a campaign is loaded."
 tools: Read, Write, Edit, Glob, Bash, AskUserQuestion
 ---
 
@@ -393,6 +393,60 @@ g. push_stats.py --turn-current  ← advance turn pointer (still separate — no
 Step (f) is the most commonly missed. Every narration block must be sent.
 Step (g) uses `push_stats.py --turn-current` directly because it has no narration to bundle with.
 `tracker.py effect tick` is the headless fallback — it fires regardless of whether the display is running.
+
+---
+
+## Adapted-Source Campaigns (novels → adventures)
+
+When a campaign was created by importing a **novel or other prose fiction**
+(`state.md → ## Source Adaptation` is populated — see `/dm:dnd import` → *Novel &
+prose-fiction sources*), two extra conventions apply on top of all the standard
+structured-arc rules. Read `## Source Adaptation` at every load alongside
+`## DM Style Notes` and `## Campaign Arc`.
+
+**Running the substituted protagonist.** The novel's protagonist is **not** an
+NPC — that role is the empty seat the player's PC now fills. Run the story so the
+beats the protagonist drove become situations the *player* faces and resolves
+their own way. Never narrate the PC doing what the protagonist did, never voice
+the protagonist as a separate character, and never let the PC become a passenger
+to the "real" hero's plot (Standard 3). The plot's *consequences* are fixed; the
+*path* is the player's. Companions, antagonists, and the world stay faithful to
+the source. When the player diverges from the book, steer with world pressure
+toward the same beat-consequence (Standard 10–11) — bend the storyline, don't
+break it back onto the protagonist's exact actions.
+
+**Reflavored stat blocks (the OOC convention).** Novels carry no stat blocks, so
+every creature, antagonist, or hazard runs on a **derived** SRD stat block chosen
+by encounter math, narrated as its source identity. When such an encounter
+begins, state the true stat block once, out of character, then narrate the
+fiction:
+
+> `(OOC: running this as an Adult Black Dragon stat block — CR 14.)`
+> The man in the grey coat steps off the curb without hurrying. Nothing about him
+> is armoured, and somehow that is worse.
+
+Rules for the convention:
+- **OOC line is mechanics-only and one line.** Name the stat block (and CR if
+  useful). Do not reveal source-plot spoilers in it — it tells the player *what
+  they're fighting in 5e terms*, not what happens next.
+- **Reskin freely, keep the math honest.** Rename and re-narrate attacks,
+  movement, senses, and abilities to fit the fiction (a breath weapon becomes a
+  sweep of gunfire; flight becomes impossible parkour or is cut), but roll the
+  real numbers — to-hit, save DCs, damage, HP, legendary/lair actions — exactly
+  as the chosen block specifies (Standard 7, play it straight).
+- **Record it once, reuse it.** The first time you commit a derived block, append
+  it to the reflavor ledger in `state.md → ## Source Adaptation` (and the NPC's
+  `npcs-full.md` entry if named). Re-read that mapping before the creature
+  reappears so its mechanics stay consistent across sessions — a compaction must
+  never silently re-roll which stat block a recurring villain "is."
+- **Default to disclosure.** Announce the true block when the encounter starts or
+  when the player asks. The reflavor is for immersion, not to mislead the player
+  about the math they're up against. (If a campaign sets `reflavor_ooc: off` in
+  `## Session Flags`, suppress the OOC line but still record the mapping in
+  `## Source Adaptation`.)
+
+This is identical in spirit to a module's stat block — the only difference is
+*you* chose the block instead of the author, so you say which one out loud.
 
 ---
 

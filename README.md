@@ -24,7 +24,7 @@ There are two ways to play, and they serve different needs:
 
 **Improvised campaigns** — Claude generates the world from scratch and auto-creates a committed three-act narrative arc from the setting, factions, and threats it just built. The arc gives the story a defined shape without scripting what happens — beats are defined by consequence ("what changes") not by event, so Claude stays flexible on how each beat lands while committing to the fact that it must. The arc advances across sessions, can be revised when players redirect the story, and continues into a new arc when all six beats resolve. This is Claude as a full creative collaborator: world-builder, improv partner, and story architect in one.
 
-**Structured campaigns** — Use `/dm:dnd import` to drop in a pre-written source (official WotC modules, published third-party campaigns, or a custom DM-written document in PDF, markdown, DOCX, or plain text format). Claude reads and chunks the source, extracts the structure type (linear, hub-and-spoke, or faction-web), and builds all campaign files automatically — acts, chapters, key story beats, telegraph scenes, NPCs, factions, locations, and quest hooks. The campaign runs with enforced deterministic structure: required beats must land in each chapter, Claude telegraphs before delivering them, and steers with world pressure rather than walls when players drift. Drop in the Lost Mine of Phandelver and Claude will run it chapter by chapter with the same twelve DM standards applied to every scene.
+**Structured campaigns** — Use `/dm:dnd import` to drop in a pre-written source (official WotC modules, published third-party campaigns, or a custom DM-written document in PDF, markdown, DOCX, or plain text format). Claude reads and chunks the source, extracts the structure type (linear, hub-and-spoke, or faction-web), and builds all campaign files automatically — acts, chapters, key story beats, telegraph scenes, NPCs, factions, locations, and quest hooks. The campaign runs with enforced deterministic structure: required beats must land in each chapter, Claude telegraphs before delivering them, and steers with world pressure rather than walls when players drift. Drop in the Lost Mine of Phandelver and Claude will run it chapter by chapter with the same twelve DM standards applied to every scene. The same command also **adapts novels and prose fiction** — your character steps into the protagonist's seat, the plot's turning points become the enforced beats, and enemies (which a novel never stats out) run on mechanically appropriate SRD stat blocks chosen by encounter math, narrated as their source identity with the true block disclosed out of character.
 
 Both modes share the same DM engine. The [twelve applied behavioral standards](https://github.com/neuralinitiative/claude-dnd-skill/blob/main/SKILL.md#what-makes-a-great-dm--applied-standards) are enforced as hard constraints in every session regardless of which mode you're in — improvised or structured, the DM improvises within situations, lets choices matter, makes every NPC a person, and controls pace deliberately.
 
@@ -60,6 +60,7 @@ If you're on Claude Code, you're in the right place.
 - <img src="skills/dnd/display/icons/crystal_ball.png" height="18"> **Dynamic narrative arc** — auto-generated at `/dm:dnd new` from the world's threat, factions, and setting; three acts, six beats defined by consequence not event; arc tracked across sessions, revised when players redirect the story, continued into a new arc when complete
 - <img src="skills/dnd/display/icons/spellbook.png" height="18"> **Campaign relationship graph** — typed-edge graph alongside the markdown campaign files, with verbatim source-anchors on every edge; `scene-context` query auto-pulled at `/dm:dnd load` to surface who-knows-whom in the current scene without re-reading full NPC files; designed to hold long-session continuity when context compaction strips files out of scope. Background research and the A/B replay study that motivated it: [`docs/research/graph/`](docs/research/graph/)
 - <img src="skills/dnd/display/icons/pack.png" height="18"> **Campaign import** — `/dm:dnd import` accepts PDF, markdown, DOCX, or plain text; extracts structure type, acts, chapters, key beats, telegraph scenes, NPCs, factions, and quest hooks; builds all campaign files automatically and keeps the full source as a lazily-loaded corpus so even a long module loads chapter by chapter
+- <img src="skills/dnd/display/icons/pack.png" height="18"> **Novel adaptation** — the same import turns a **novel or prose story** into a structured campaign: your character takes the protagonist's role, the plot's turning points become enforced story beats, companions and antagonists carry over as NPCs, and enemies run on reflavored SRD stat blocks (the true block disclosed out of character, the fiction kept faithful to the book)
 - <img src="skills/dnd/display/icons/helmet.png" height="18"> **Portable characters** — bring your character into any campaign; level up, grow your stat tree, and carry your inventory and loot — or start fresh each time
 - <img src="skills/dnd/display/icons/attack.png" height="18"> **Full D&D 5e mechanics** — initiative, attacks, saving throws, spell slots, XP, levelling up, short/long rests
 - <img src="skills/dnd/display/icons/chat.png" height="18"> **Atmospheric DM** — dark fantasy tone, distinct NPC voices, hidden rolls, a world that reacts to choices
@@ -177,6 +178,15 @@ The skill follows [semantic versioning](https://semver.org/): `MAJOR.MINOR.PATCH
 /dm:dnd load my-campaign                        # start a session — Claude enforces the arc
 ```
 
+**Adapt a novel** — turn a book that was never written for the table into a campaign you star in:
+
+```
+/dm:dnd import my-campaign path/to/novel.epub.txt   # adapts prose fiction into a structured campaign
+/dm:dnd load my-campaign                            # you play the protagonist's role; the plot is preserved
+```
+
+The same import accepts a **novel or other prose fiction** and adapts it: your character steps into the protagonist's seat, the plot's turning points become enforced story beats, companions and antagonists carry over as NPCs, and — since novels have no stat blocks — enemies run on mechanically appropriate SRD stat blocks chosen by encounter math, narrated as whoever they are in the book. The true stat block is disclosed out of character (`(OOC: running this as an Adult Black Dragon — CR 14.)`) while the fiction stays the man in the grey coat. Drop in a superhero novel and you fight *its* villains, as *your* hero, through *its* storyline.
+
 Once loaded, type naturally — no `/dm:dnd` prefix needed. The DM interprets everything as in-game action.
 
 ---
@@ -186,7 +196,7 @@ Once loaded, type naturally — no `/dm:dnd` prefix needed. The DM interprets ev
 | Command | Description |
 |---------|-------------|
 | `/dm:dnd new <name>` | Create a new campaign — generates world seed, NPCs, starting location, and dynamic narrative arc |
-| `/dm:dnd import <name> <source>` | Import a pre-written campaign from PDF, markdown, DOCX, or plain text; extracts structure and builds all campaign files |
+| `/dm:dnd import <name> <source>` | Import a pre-written campaign **or adapt a novel** from PDF, markdown, DOCX, or plain text; extracts structure (or the novel's plot) and builds all campaign files. Novel mode puts your PC in the protagonist's seat and derives reflavored stat blocks for enemies |
 | `/dm:dnd load <name>` | Load an existing campaign and enter DM mode |
 | `/dm:dnd save` | Write session events to log, update state and character files |
 | `/dm:dnd end` | Save session, append recap, stop display companion |

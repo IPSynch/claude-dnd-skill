@@ -353,6 +353,95 @@ Campaign "<name>" created from <source title>.
 
 ---
 
+### Novel & prose-fiction sources — adaptation mode
+
+The import pipeline above is source-agnostic: `import_campaign.py` extracts any
+PDF / EPUB-converted-to-text / DOCX / MD / TXT, and a **novel is just a source
+with a different shape**. A published module is pre-keyed for play (stat blocks,
+keyed rooms, explicit hooks); a novel is continuous prose with a protagonist,
+written to be *read* rather than *run*. Adaptation mode is the set of overrides
+that turns the second kind into a playable structured campaign — so a superhero
+novel, a fantasy saga, or a thriller becomes a campaign where **the player's
+character stands in for the protagonist** and the storyline is preserved.
+
+**Detect it.** In Step 2, decide whether the source is a module or prose
+fiction. Tells of prose fiction: continuous narrative paragraphs, a named
+point-of-view/protagonist, chapter titles rather than keyed encounters, dialogue
+woven into prose, **no stat blocks, no AC/HP/CR notation, no boxed read-aloud
+text, no DC callouts**. When in doubt, ask the DM: *"Is this a game module or a
+novel/story I should adapt?"* The standard module steps (1, 3, 4, 6, 6a, 6b, 7)
+run unchanged. The overrides below replace or augment Steps 2 and 5.
+
+**1 — Identify the protagonist and the substitution (augments Step 2).**
+Pick out the protagonist (or co-leads), the deuteragonists/companions, the
+antagonist(s), and the supporting cast. Record a **substitution plan**:
+- The **protagonist → the player's PC.** Everything the protagonist *did*
+  becomes a situation the PC now faces — the protagonist is not an NPC in the
+  campaign; their role is the empty seat the player fills. Do not create an
+  NPC entry for them.
+- **Companions / love interests / rivals → keep as NPCs** (full entries in
+  `npcs-full.md`), unless the player asks to recast or remove one. Ask the DM if
+  any companion should instead be a second PC or be cut.
+- **Antagonists and threats → keep as NPCs**, but flag each as needing a
+  **derived stat block** (see override 3) since the prose won't give one.
+- If the protagonist has signature powers/gear the player can't replicate at
+  their level, note them as **aspirational** — narrative beats the PC grows
+  toward, not starting kit. Do not hand the PC the protagonist's endgame loadout.
+
+**2 — Derive beats from plot turns (augments Step 2).** A novel has no "key
+beats" labelled as such; its turning points *are* the beats. For each chapter,
+extract the **consequence** that must land (the same "consequence, not event"
+test the dynamic arc uses): the reveal, the betrayal, the loss, the escalation,
+the choice that changes everything. Those become `key_beats` in `arc.md`. The
+chapter's prose becomes its `telegraph_scene` material and its `branching_notes`
+should explicitly say *how the beat still lands if the player diverges from what
+the protagonist did* — because they will, and the storyline must bend, not break.
+Treat the novel's plot like the structured arc treats a module: **the beats are
+mandatory, the path to them is not.** Steer with world pressure (Standard 10–11),
+never narrate the player into doing what the protagonist did.
+
+**3 — No stat blocks: derive and reflavor (augments Step 5, npcs-full.md).**
+The source gives you a *character*, not a *stat block*. For every antagonist,
+creature, or hazard, choose a mechanically appropriate SRD stat block for the
+threat level the scene implies, and record it on the NPC's `npcs-full.md` entry
+as a **reflavor mapping**:
+```
+**Reflavor:** narratively "<source identity>" · mechanically uses **<SRD stat block>**
+  (CR <x>). Reskin: <which attacks/abilities map to what the prose shows; what to
+  rename; any resistances/senses to drop or add so it fits the fiction>.
+```
+Example: a novel's unkillable hitman in a grey coat → *mechanically* an Adult
+Black Dragon stat block (legendary actions = his uncanny initiative and
+reactions; breath weapon reskinned as a sweep of gunfire; flight cut or
+reskinned as impossible parkour), *narratively* a male human. At the table this
+surfaces via the OOC convention in `SKILL.md → Reflavored stat blocks`. Pick
+stat blocks by **encounter math, not species** — match CR to the party, then
+reskin freely. Leave it unmapped only for threats the player won't fight.
+
+**4 — Write the Source Adaptation block (augments Step 6a, state.md).** In
+`state.md`, fill the `## Source Adaptation` section (present in the template,
+left empty for module imports): the protagonist→PC substitution, the
+kept/recast/cut companion decisions, the aspirational-powers note, and a running
+**reflavor ledger** (one line per derived stat block as you commit them in play).
+This is a compaction-resistant anchor like `## Live State Flags` — re-read it
+before voicing a recast character or re-using a derived stat block so the
+mapping stays stable across sessions.
+
+**5 — Confirm the adaptation in Step 4's summary.** Add to the summary shown
+before writing files:
+```
+Adaptation: novel → structured campaign
+Protagonist: <source name> → your PC
+Companions kept as NPCs: <names>   Recast/cut: <names or "none">
+Stat blocks: derived at encounter time (reflavored; true block shown OOC)
+```
+
+The result plays exactly like any structured import — chapter source pulled on
+demand, beats telegraphed and steered, the twelve DM standards applied — except
+the through-line is the novel's plot and the empty protagonist seat is yours.
+
+---
+
 ## `/dm:dnd save`
 Write session events to session-log.md, update state.md (location, active quests, party HP/resources, recent events), update any characters/*.md that changed. Mirror each updated character to global roster (`~/.claude/dnd/characters/<name>.md`).
 

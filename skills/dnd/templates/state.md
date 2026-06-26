@@ -142,6 +142,17 @@ revision_log: []
 #   <How to guide players toward outstanding beats without forcing.>
 ```
 
+## Source Adaptation
+*Populated by /dnd import ONLY when the source is a novel/prose fiction adapted into a campaign (see /dm:dnd import → Novel & prose-fiction sources). Leave empty for module imports and improvised campaigns. Compaction-resistant anchor — re-read before voicing a recast character or re-using a derived stat block.*
+
+- **Protagonist → PC:** <source protagonist name> → <player's PC> *(the protagonist is the empty seat the PC fills — never an NPC)*
+- **Companions kept as NPCs:** <names, or "none">
+- **Recast / cut:** <names and what changed, or "none">
+- **Aspirational powers/gear:** <protagonist signature abilities the PC grows toward, not starting kit — or "none">
+
+**Reflavor ledger** *(one line per derived stat block, committed as it is first used in play — narrative identity → SRD stat block + CR + reskin notes)*:
+*(none yet)*
+
 ## Arc History
 *(populated by /dnd arc new when a completed arc is succeeded by a new one — one entry per completed arc)*
 *(leave empty until the first arc completes)*
