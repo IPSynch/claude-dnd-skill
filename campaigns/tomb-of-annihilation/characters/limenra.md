@@ -1,7 +1,16 @@
 # Limenra
 **Player:** ipsynch  **Campaign:** tomb-of-annihilation  **Last Updated:** 2026-06-23  **Ruleset:** 2024
 
-> **Concept:** A nudist sorceress who treats space itself as something she can fold, flatten, stretch, and snap. Her power reads as *dimensional/reality manipulation* — she shunts attacks (and herself) into surfaces like living graffiti, makes the space around a target tighten or go infinitely divisible, and reshapes the density of ground and air. **Appearance & full backstory: TBD (placeholder until provided).**
+> **Concept:** A nudist sorceress who treats space itself as something she can fold, flatten, stretch, and snap. Her power reads as *dimensional/reality manipulation* — she shunts attacks (and herself) into surfaces like living graffiti, makes the space around a target tighten or go infinitely divisible, and reshapes the density of ground and air. **Appearance recorded below; full backstory TBD.**
+
+## Appearance
+*Recorded from player reference art (4 images). Use for consistent portrayal.*
+- **Face & coloring:** East Asian features — striking, symmetrical, refined. Dark, heavy-lidded eyes that read as calm to the point of insolence; full lips she keeps painted deep red. Small hoop/stud earrings. Her expression at rest is serene and faintly amused — the same unbothered look she wears when an attack fails to reach her.
+- **Hair:** long, tousled, wavy dark-brown hair to mid-back, always looking faintly damp and glossy.
+- **Skin:** fair and luminous, carried with a **perpetual dewy sheen** — as if freshly oiled or rain-wet, in any weather. It's a signature; lantern- and candle-light catch on it. *(Hooks neatly into her magic — read it as the Weave clinging to her skin, the air itself not quite touching her.)*
+- **Build:** tall, hourglass — full bust, narrow waist, wide hips and full thighs; soft over evident strength. Carries herself with relaxed, deliberate confidence.
+- **Dress:** **none, by default.** She is a committed nudist — she goes bare as a matter of course, armed only with her Untouchable AC and her composure. A recurring posture: **arms crossed beneath her bust with a small smirk** — which is *also* her combat tell when she lets a blow slow to nothing (see Reflavor Engine). Any clothing/adornment is situational and shed at the first opportunity.
+- **Overall read:** poised, sensual, and entirely unselfconscious — a woman whom nothing in the world seems able to land a finger on, and who knows it.
 
 > ⚠ **REFLAVOR KEYS ARE OOC-ONLY — HARD BAN in prose** (per `rules/narration-style.md`). The inspirations behind her kit — *Gojo Satoru / Limitless / Infinity / Hollow Purple*, and *Hero X / To Be Hero X*-style dimension & reality manipulation — are reference keys for me ONLY. They must **never** appear in narration. Show the *effect/manner* (space folding, the living-graffiti slide, the infinite slowing, the snap of fingers) — never the source label. See the Reflavor Engine below.
 
