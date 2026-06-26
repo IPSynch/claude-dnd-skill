@@ -1,11 +1,11 @@
 # Campaign: tomb-of-annihilation
-**Created:** 2026-06-23  **Last session:** —  **Session count:** 0  **Ruleset:** 2014
+**Created:** 2026-06-23  **Last session:** —  **Session count:** 0  **Ruleset:** 2024
 
 ## Current Situation
 - **Location:** Port Nyanzaru (arrival) — to be set at first session
 - **In-world date/time:** early wet season (set canonical date session 1)
-- **Party:** *(pending — character sheets to be imported)*
-- **Party status:** *(pending)*
+- **Party:** Limenra — Weave-Savant Sorcerer 3 (Limitless Sorcery) | HP 23/23 | AC 18 | DC 16 / atk +8 | SP 3 | slots 1st×4 2nd×2 *(ability scores pending confirm — see her sheet)*
+- **Party status:** Limenra full (no Inspiration). *More PCs to be added as sheets arrive.*
 
 ## World State
 - **In-world date:** *(set session 1 — Calendar of Harptos, ~1490s DR)*
@@ -79,7 +79,7 @@ steering_notes: >
 *(empty until first arc completes)*
 
 ## Session Flags
-- ruleset: 2014
+- ruleset: 2024
 - roll_mode: auto   *(per house-rules.md §6 — DM rolls and shows math, with the §4 resource-permission gate; player may flip to rolling their own PCs anytime)*
 - autosave: on
 - house_rules: rules/house-rules.md, rules/combat-rules.md, rules/narration-style.md  *(load all three at every /dm:dnd load and obey)*
@@ -87,4 +87,6 @@ steering_notes: >
 ## DM Notes (hidden from players)
 - **Acererak rarely fights;** the Tomb does the killing. Don't over-telegraph him early.
 - **The patron's decline is the pacing clock.** Show it.
-- **Character-specific combat rules** (auras, Alert swaps, named-feature math) will be added to `rules/combat-rules.md` once the ToA character sheets are imported. The general rules already apply.
+- **Limenra's combat bindings are live** in `rules/combat-rules.md` (reactions, resource gate, OOC reflavor ban). Her power reflavors as spatial/dimensional manipulation — improvise per the Reflavor Engine in her sheet; the source inspirations are HARD-BANNED from prose.
+- **Open on Limenra's sheet:** confirm her 5 non-CHA ability scores and HP/Cling-to-Life value before session 1.
+- **Ruleset is 2024** (her build); convert ToA's 2014 stat blocks on the fly.

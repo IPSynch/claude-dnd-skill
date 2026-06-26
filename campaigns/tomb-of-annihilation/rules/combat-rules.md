@@ -39,10 +39,22 @@
 
 ---
 
-## ⏸ PENDING — character-specific feature math (re-bind on character import)
-*The player's prior campaign defined per-character combat math (named-character auras, Alert initiative swaps, sorcery feature chains, regeneration rules for specific enemies). Those bound to old PCs and do **not** apply here. When the ToA party sheets are imported, capture each PC's:*
-- *limited-use features and exact resource costs (for the §4 permission gate)*
-- *any aura/buff with a stated range (in feet) and what it applies to (skills only? saves? attacks?)*
-- *initiative quirks (e.g. Alert), reaction options, and per-rest racial/class traits*
-- *any reflavor keys (OOC-only labels that must never appear in prose — see narration-style HARD BAN)*
-*…and add them here as concrete, mechanical lines like the originals.*
+## CHARACTER BINDINGS
+
+### Limenra — Sorcerer 3 (Limitless Sorcery) — full sheet: `characters/limenra.md`
+- **AC 18, no armor** (Untouchable: 10 + DEX + CHA). She fights nude — never assume armor.
+- **Spell save DC 16 / spell attack +8.** With **Innate Sorcery** active (1 min, 2/LR): **DC 17 + advantage on spell attacks.**
+- **REACTIONS (offer these when she's hit — per "pause on a hit to a PC"):**
+  - **Shield** (1st-level slot) → +5 AC, may turn a hit into a miss.
+  - **Warped Space** (costs **1 SP**) → negates the hit entirely + teleport 10 ft.
+  - **Silvery Barbs** (1st-level slot) → after an enemy hits/succeeds.
+  - **Spell Siphon** (2/LR, CHA check) → only vs a spell targeting only her.
+  - **Feather Fall** (reaction) when falling.
+- **LIMITED-USE RESOURCES — §4 gate; NEVER spend without explicit go-ahead, only suggest:**
+  - Spell slots: 1st ×4, 2nd ×2 · Sorcery Points ×3 · Innate Sorcery 2/LR · Spell Siphon 2/LR · Cure Wounds free 1/LR · Strixhaven free 1/LR · Cling to Life (recharges only on a humanoid death within 30 ft).
+  - **Cantrips are FREE** (Sorcerous Burst, Turbulent Force, Mind Sliver, Sacred Flame, Prestidigitation, Thaumaturgy) — use at will when fitting.
+  - **Warped Space costs 1 SP** — it's a *resource*, so suggest-and-wait unless she's pre-authorized it for the fight.
+- **CON saves: advantage** (Adamant Endurance). **All saves vs spells/magic: advantage** (One with the Weave).
+- **REFLAVOR — every spell/feature manifests as spatial/dimensional manipulation.** Improvise per the Reflavor Engine in her sheet; vary it; tag the real mechanic OOC, e.g. `(OOC: Shield)`.
+- **🚫 OOC-ONLY REFLAVOR KEYS — HARD BAN in prose:** the inspirations behind her kit (the Limitless/Infinity/Hollow-Purple sorcerer; the Hero-X dimension/reality manipulator) are reference keys for the DM ONLY. **Never name them in narration.** Show the effect — folding space, the living-graffiti slide, the infinite slowing, the finger-snap — never the source.
+- **Personal items (Rectum of Holding / Shatdora / Cumdora):** Bag-of-Holding-equivalent storage + secretion shunts. Flavor/utility, no combat function unless she weaponizes a purge — adjudicate ad hoc in the committed grotesque register.

@@ -35,5 +35,11 @@
 
 ---
 
-## ⏸ PENDING — character-specific resource/aura rules (re-bind on character import)
-*The player's prior campaign defined a permanent skill-check aura tied to a specific PC (a +1d4 "Guidance"-style buff for the character and allies within a stated range, skills only). That was bound to an old PC and does **not** apply here. When the ToA party sheets are imported, record for each new PC: any always-on or per-rest buff, its exact range in feet, what it applies to (skills/saves/attacks), and how it shows in the OOC line — mirroring the original format.*
+## CHARACTER BINDINGS
+
+### Limenra — resource & roll handling (full mechanics in `rules/combat-rules.md` + `characters/limenra.md`)
+- **§4 resource gate applies in full** to her slots (1st ×4 / 2nd ×2), Sorcery Points (×3), Innate Sorcery (2/LR), Spell Siphon (2/LR), Warped Space (1 SP), and free 1/LR casts. Suggest, never auto-spend. **Cantrips are free.**
+- **§3 auto-rolls:** her CHA-based social checks shine (Persuasion/Deception/Intimidation +7). Roll with the OOC breakdown.
+- **Advantage to bake into rolls:** all saves vs spells/magic, and all CON saves.
+- **No always-on aura** (unlike the prior campaign's PC). Her passive is **Untouchable** (AC 18, no armor) — not a buff to others.
+- Append further party members' bindings here as their sheets arrive.
