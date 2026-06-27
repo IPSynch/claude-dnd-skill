@@ -17,6 +17,7 @@ Usage:
   python3 import_campaign.py <filepath> --info     # print file info + page/word count only
   python3 import_campaign.py <filepath> --chunk N  # print chunk N of ~4000 words (for large PDFs)
   python3 import_campaign.py <filepath> --chunks   # print total number of chunks
+  python3 import_campaign.py <filepath> --info --prose  # info + novel-adaptation guidance
 
 Output is UTF-8 plain text, written to stdout. Claude reads this and maps it to campaign files.
 """
@@ -220,16 +221,27 @@ def total_chunks(text: str) -> int:
     return max(1, (wc + CHUNK_WORDS - 1) // CHUNK_WORDS)
 
 
-def file_info(path: str, text: str) -> str:
+def file_info(path: str, text: str, prose: bool = False) -> str:
     ext = os.path.splitext(path)[1].lower()
     wc = word_count(text)
     chunks = total_chunks(text)
     lines = [
         f"File:   {os.path.basename(path)}",
         f"Type:   {ext or 'unknown'}",
+        f"Mode:   {'prose / novel (adaptation)' if prose else 'module (structure extraction)'}",
         f"Words:  {wc:,}",
         f"Chunks: {chunks}  (--chunk 0 through --chunk {chunks - 1})",
     ]
+    if prose:
+        lines += [
+            "",
+            "Prose mode: this is fiction, not a keyed module. Don't extract a",
+            "structure that isn't there — *adapt* one. Read all chunks, then",
+            "derive: a campaign premise + party hook, a six-beat arc from the",
+            "story's turning points, NPCs from characters, locations from",
+            "settings, encounters from conflicts, factions from the story's",
+            "sides. See the novel-adaptation procedure in SKILL-commands.md.",
+        ]
     return "\n".join(lines)
 
 
@@ -240,6 +252,10 @@ def main():
     parser.add_argument("--chunks", action="store_true", help="Print total chunk count")
     parser.add_argument("--chunk", type=int, default=None, metavar="N",
                         help="Print chunk N (0-indexed, ~4000 words each)")
+    parser.add_argument("--prose", action="store_true",
+                        help="Treat the source as a novel / prose fiction to be "
+                             "adapted into a campaign, not a keyed module to be "
+                             "extracted (affects --info guidance only)")
     args = parser.parse_args()
 
     if not os.path.exists(args.filepath):
@@ -257,7 +273,7 @@ def main():
         sys.exit(1)
 
     if args.info:
-        print(file_info(args.filepath, text))
+        print(file_info(args.filepath, text, prose=args.prose))
     elif args.chunks:
         print(total_chunks(text))
     elif args.chunk is not None:

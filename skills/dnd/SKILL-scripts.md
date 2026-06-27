@@ -387,6 +387,40 @@ lookup_with_level("sneak attack", category="feature", level=3)  # → level-reso
 
 ---
 
+## Statblock Import — `scripts/import_statblocks.py`
+
+Import monster statblocks from a bestiary into the **supplemental** library so
+`lookup.py monster` and combat can use them. Records merge on top of the SRD
+without overwriting it. Two stages: a script extracts + chunks the book, Claude
+parses each statblock to JSON, then the script validates and merges. Full
+procedure: `/dm:dnd bestiary` in SKILL-commands.md.
+
+```bash
+# 1. Inspect + read the book (same extraction as campaign import)
+python3 ${CLAUDE_SKILL_DIR}/scripts/import_statblocks.py "<book>" --info
+python3 ${CLAUDE_SKILL_DIR}/scripts/import_statblocks.py "<book>" --chunk 0
+
+# 2. Merge parsed records (name required; index/xp/abilities auto-filled)
+python3 ${CLAUDE_SKILL_DIR}/scripts/import_statblocks.py \
+  --add-json '[{"name":"Gearforged","cr":1,"hp":52,"ac":16,"size":"Medium",
+    "type":"construct","str":16,"dex":13,"con":15,"int":10,"wis":11,"cha":9}]' \
+  --source-book "Tome of Beasts"
+python3 ${CLAUDE_SKILL_DIR}/scripts/import_statblocks.py --add-file recs.json --source-book "Creature Codex"
+
+# 3. Manage the imported bestiary
+python3 ${CLAUDE_SKILL_DIR}/scripts/import_statblocks.py --list
+python3 ${CLAUDE_SKILL_DIR}/scripts/import_statblocks.py --remove "Gearforged"
+python3 ${CLAUDE_SKILL_DIR}/scripts/import_statblocks.py --remove-book "Tome of Beasts"
+```
+
+Re-importing a name updates it (idempotent); a name already in the SRD is
+skipped. Add `--ruleset 2024` to target the 2024 library. CR→XP is derived from
+the standard 5e table when `xp` is omitted. Only import books you have the right
+to use — keep closed/copyrighted bestiaries (e.g. the WotC *Monster Manual*) in
+your own local copy, not committed to the repo.
+
+---
+
 ## Display Companion Setup (one-time)
 
 ```bash

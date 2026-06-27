@@ -239,6 +239,8 @@ Import a pre-written campaign from a source file (PDF, MD, TXT, DOCX) and create
 
 **Supported file types:** `.pdf` `.md` `.txt` `.markdown` `.docx`
 
+**Importing a novel instead of a module?** Add `--prose` (e.g. `/dm:dnd import "The Hobbit.pdf" --prose`) and follow the [novel adaptation procedure](#importing-a-novel-or-prose-fiction-adaptation-mode) below — same pipeline, different analysis step.
+
 ### Step 1 — Extract source text
 ```bash
 python3 ${CLAUDE_SKILL_DIR}/scripts/import_campaign.py "<filepath>" --info
@@ -350,6 +352,52 @@ Campaign "<name>" created from <source title>.
 → /dm:dnd character new      — create your character
 → /dm:dnd load <name>        — start playing immediately
 ```
+
+### Importing a novel or prose fiction (adaptation mode)
+
+`/dm:dnd import <novel> --prose` runs the **same pipeline** but with a different
+Step 2. A novel is not a keyed module — it has no acts, no encounter tables, no
+DCs, and a single fixed protagonist the players are *not* going to be. So you do
+not *extract* a structure that isn't there; you **adapt** one. Everything from
+Step 3 on (campaign name, summary, file writing, lazy corpus, gap-fill) is
+unchanged — only the analysis differs.
+
+Run `import_campaign.py "<novel>" --info --prose` first; it confirms prose mode
+and prints the adaptation checklist. Novels are long, so always read **all**
+chunks before adapting.
+
+Replace Step 2 with this adaptation pass:
+
+- **Premise & party hook** — the novel's central conflict becomes the campaign
+  premise. Invent a reason *a party of adventurers* (not the novel's hero) is
+  drawn into it: hired, caught in the fallout, parallel to the original plot, or
+  arriving after the book's events. Never assume the players will replay the
+  protagonist's exact path.
+- **Arc (six beats from turning points)** — map the story's major turning points
+  onto the standard three-act / six-beat arc (Inciting Incident → Complication →
+  Midpoint Shift → All Is Lost → Final Confrontation → Resolution). Write beats
+  as **consequences** ("the conspiracy is revealed to reach the throne"), not as
+  scripted scenes the players must walk through — same `what_changes` discipline
+  as a dynamic arc. The campaign is `type: dynamic` (not `structured`): there is
+  no chapter-keyed source to enforce, so use the inline dynamic arc in `state.md`
+  and skip `arc.md`/`world-nodes.md`/the per-chapter `source/` corpus. Keep the
+  novel text itself as a single `source/novel.md` reference for tone and detail.
+- **NPCs from characters** — each significant character becomes an NPC with role,
+  motivation, secret, speech quirk, and relationships drawn from the text. The
+  protagonist becomes a (possibly off-screen) NPC, not a player character.
+- **Locations from settings** — distinct places in the novel become adventure
+  nodes; note the mood/sensory detail the prose gives them.
+- **Encounters from conflicts** — the book's fights, chases, and confrontations
+  become encounter seeds. Assign CRs to fit the intended party level (ask in the
+  gap-fill wizard if the novel implies none).
+- **Factions from sides** — the story's opposing forces become factions with
+  agendas and a relationship to the party.
+- **Tone** — lift the novel's genre and tone directly into `world.md`; it is
+  usually clearer in fiction than in a rules-first module.
+
+Then continue at Step 3 exactly as for a module. Flag for the DM in the summary
+that this is an *adaptation* — the world and characters are faithful to the
+source, but the plot is a sandbox the party drives, not the novel's fixed plot.
 
 ---
 
@@ -481,6 +529,72 @@ Exit the current session **without saving any state changes**. Use this when an 
 - `status` → `python3 ${CLAUDE_SKILL_DIR}/scripts/build_srd.py --status` — show current dataset metadata
 
 Dataset is bundled at `${CLAUDE_SKILL_DIR}/data/dnd5e_srd.json` (1453 records: spells, equipment, magic items, conditions, monsters, class features). No download required at runtime. Run `sync` only when you want to pull new upstream content.
+
+---
+
+## `/dm:dnd bestiary [import|list|remove]`
+
+Import monster statblocks from a bestiary (Monster Manual, Tome of Beasts,
+homebrew) into the statblock library so `lookup.py monster "<name>"` and combat
+resolution can use them. The bundled SRD is fixed; these land in the
+**supplemental** dataset (`data/dnd5e_supplemental.json`), which `lookup.py`
+merges on top of the SRD **without overwriting** SRD entries. Use
+`scripts/import_statblocks.py`.
+
+> **Rights:** only import books you have the right to use. SRD and open-licence
+> bestiaries (e.g. Kobold Press's open Tome of Beasts content) are fine to keep
+> in the library; closed/copyrighted books (the WotC *Monster Manual*) should
+> stay in the user's own local copy — do not commit them back to the repo.
+
+### `import <filepath> [--source-book "<name>"] [--ruleset 2014|2024]`
+
+A two-stage flow that mirrors `/dm:dnd import` — a script does the I/O, Claude
+does the parsing.
+
+1. **Inspect & chunk.** Confirm the source and get the chunk count:
+   ```bash
+   python3 ${CLAUDE_SKILL_DIR}/scripts/import_statblocks.py "<filepath>" --info
+   python3 ${CLAUDE_SKILL_DIR}/scripts/import_statblocks.py "<filepath>" --chunk 0
+   ```
+   (Same extraction as campaign import: PyMuPDF column-aware for PDFs, falls back
+   to `pdftotext`. Install `pymupdf` for reliable multi-column books.)
+
+2. **Parse statblocks to JSON.** Read each chunk and turn every statblock into a
+   record matching the SRD monster shape. Only `name` is required; `index` is
+   derived from the name, `xp` is derived from `cr` if omitted, and ability
+   scores default to 10. Fields:
+   ```
+   name, description, cr, xp, size, type, hp, hp_dice, ac, speed,
+   str, dex, con, int, wis, cha, alignment, languages
+   ```
+   Put trait/action text (multiattack, legendary actions, etc.) in `description`
+   the same way the SRD records do.
+
+3. **Merge into the library**, stamped with the book name for provenance:
+   ```bash
+   python3 ${CLAUDE_SKILL_DIR}/scripts/import_statblocks.py \
+     --add-json '[{"name":"Clockwork Dragon","cr":12,"hp":225,"ac":19,
+       "size":"Huge","type":"construct","str":25,"dex":10,"con":21,
+       "int":14,"wis":13,"cha":16,"description":"Multiattack: ..."}]' \
+     --source-book "Tome of Beasts"
+   ```
+   For a large book, write the records to a file and use `--add-file recs.json`.
+   Re-importing the same name **updates** it (idempotent); a name already in the
+   SRD is **skipped** (a supplemental copy would be dead weight). The script
+   reports added / updated / skipped counts and any per-record warnings.
+
+### `list [--ruleset 2014|2024]`
+```bash
+python3 ${CLAUDE_SKILL_DIR}/scripts/import_statblocks.py --list
+```
+Lists imported statblocks grouped by source book.
+
+### `remove [--ruleset 2014|2024]`
+```bash
+python3 ${CLAUDE_SKILL_DIR}/scripts/import_statblocks.py --remove "Clockwork Dragon"
+python3 ${CLAUDE_SKILL_DIR}/scripts/import_statblocks.py --remove-book "Tome of Beasts"
+```
+Removes a single statblock by name, or every statblock from a given book.
 
 ---
 

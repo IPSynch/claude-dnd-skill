@@ -59,7 +59,8 @@ If you're on Claude Code, you're in the right place.
 - <img src="skills/dnd/display/icons/dragon.png" height="18"> **Two campaign modes** — improvised (Claude generates world + dynamic arc) or structured (import pre-written material and enforce its beats)
 - <img src="skills/dnd/display/icons/crystal_ball.png" height="18"> **Dynamic narrative arc** — auto-generated at `/dm:dnd new` from the world's threat, factions, and setting; three acts, six beats defined by consequence not event; arc tracked across sessions, revised when players redirect the story, continued into a new arc when complete
 - <img src="skills/dnd/display/icons/spellbook.png" height="18"> **Campaign relationship graph** — typed-edge graph alongside the markdown campaign files, with verbatim source-anchors on every edge; `scene-context` query auto-pulled at `/dm:dnd load` to surface who-knows-whom in the current scene without re-reading full NPC files; designed to hold long-session continuity when context compaction strips files out of scope. Background research and the A/B replay study that motivated it: [`docs/research/graph/`](docs/research/graph/)
-- <img src="skills/dnd/display/icons/pack.png" height="18"> **Campaign import** — `/dm:dnd import` accepts PDF, markdown, DOCX, or plain text; extracts structure type, acts, chapters, key beats, telegraph scenes, NPCs, factions, and quest hooks; builds all campaign files automatically and keeps the full source as a lazily-loaded corpus so even a long module loads chapter by chapter
+- <img src="skills/dnd/display/icons/pack.png" height="18"> **Campaign import** — `/dm:dnd import` accepts PDF, markdown, DOCX, or plain text; extracts structure type, acts, chapters, key beats, telegraph scenes, NPCs, factions, and quest hooks; builds all campaign files automatically and keeps the full source as a lazily-loaded corpus so even a long module loads chapter by chapter. Add `--prose` to **adapt a novel** instead — premise, dynamic arc, NPCs, locations, and encounters derived from the story
+- <img src="skills/dnd/display/icons/dragon.png" height="18"> **Bestiary import** — `/dm:dnd bestiary import` brings monster statblocks from a bestiary (Tome of Beasts, homebrew, any book you have the right to use) into the statblock library; imported monsters are immediately usable in lookup and combat alongside the bundled SRD
 - <img src="skills/dnd/display/icons/helmet.png" height="18"> **Portable characters** — bring your character into any campaign; level up, grow your stat tree, and carry your inventory and loot — or start fresh each time
 - <img src="skills/dnd/display/icons/attack.png" height="18"> **Full D&D 5e mechanics** — initiative, attacks, saving throws, spell slots, XP, levelling up, short/long rests
 - <img src="skills/dnd/display/icons/chat.png" height="18"> **Atmospheric DM** — dark fantasy tone, distinct NPC voices, hidden rolls, a world that reacts to choices
@@ -187,6 +188,7 @@ Once loaded, type naturally — no `/dm:dnd` prefix needed. The DM interprets ev
 |---------|-------------|
 | `/dm:dnd new <name>` | Create a new campaign — generates world seed, NPCs, starting location, and dynamic narrative arc |
 | `/dm:dnd import <name> <source>` | Import a pre-written campaign from PDF, markdown, DOCX, or plain text; extracts structure and builds all campaign files |
+| `/dm:dnd import <source> --prose` | Adapt a **novel / prose fiction** into a campaign — derives premise, arc, NPCs, locations, and encounters instead of extracting a keyed module |
 | `/dm:dnd load <name>` | Load an existing campaign and enter DM mode |
 | `/dm:dnd save` | Write session events to log, update state and character files |
 | `/dm:dnd end` | Save session, append recap, stop display companion |
@@ -205,6 +207,9 @@ Once loaded, type naturally — no `/dm:dnd` prefix needed. The DM interprets ev
 | `/dm:dnd tutor off` | Disable tutor / learning mode |
 | `/dm:dnd data sync` | Rebuild bundled SRD dataset from upstream sources (only needed for new upstream content) |
 | `/dm:dnd data status` | Show current dataset record counts and upstream SHA |
+| `/dm:dnd bestiary import <source>` | Import monster statblocks from a bestiary (Tome of Beasts, homebrew, etc.) into the statblock library |
+| `/dm:dnd bestiary list` | List imported (non-SRD) statblocks grouped by source book |
+| `/dm:dnd bestiary remove <name>` | Remove an imported statblock by name (or `--remove-book` for a whole book) |
 | `/dm:dnd update` | Pull latest skill changes from `origin/main` (refuses on dirty tree, fast-forward only) |
 | `/dm:dnd update --check` | Show local-vs-remote version and commit-diff without pulling |
 | `/dm:dnd path [<new>\|reset]` | View or relocate campaign storage via `DND_CAMPAIGN_ROOT` |
@@ -736,7 +741,7 @@ ${CLAUDE_SKILL_DIR}/
 ├── README.md                 # This file
 ├── data/
 │   ├── dnd5e_srd.json        # Bundled 5e SRD dataset (1453 records — spells, features, equipment, monsters)
-│   └── dnd5e_supplemental.json  # Non-SRD content (Xanathar's, subclass features, etc.)
+│   └── dnd5e_supplemental.json  # Non-SRD content (Xanathar's, subclass features, imported statblocks, etc.)
 ├── scripts/
 │   ├── dice.py
 │   ├── ability-scores.py
@@ -747,6 +752,8 @@ ${CLAUDE_SKILL_DIR}/
 │   ├── lookup.py             # SRD + supplemental query API
 │   ├── build_srd.py          # Fetches upstream 5e data and builds dnd5e_srd.json
 │   ├── sync_srd.py           # Checks upstream SHAs; rebuilds only on new commits
+│   ├── import_campaign.py    # Extracts/chunks a module or novel (--prose) for import
+│   ├── import_statblocks.py  # Imports bestiary statblocks into the supplemental library
 │   └── build_supplemental.py # Fetches non-SRD entries from wikidot for a character or campaign
 ├── display/
 │   ├── dnd-display-app.py    # Flask SSE server
