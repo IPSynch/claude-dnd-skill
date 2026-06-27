@@ -37,3 +37,10 @@ venv/
 
 # macOS
 .DS_Store
+
+# Copyrighted source material — never commit
+.worm-source/
+*.pdf
+
+# Worm campaign: verbatim novel prose (regenerate via build_corpus.py)
+dnd-data/campaigns/*/source/
