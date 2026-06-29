@@ -37,3 +37,6 @@ venv/
 
 # macOS
 .DS_Store
+
+# D&D in-repo data root: ignore transient runtime state (session locks, tokens)
+dnd-data/.runtime/
