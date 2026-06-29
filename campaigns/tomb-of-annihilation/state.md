@@ -4,8 +4,8 @@
 ## Current Situation
 - **Location:** Port Nyanzaru (arrival) — to be set at first session
 - **In-world date/time:** early wet season (set canonical date session 1)
-- **Party:** Limenra — Weave-Savant Sorcerer 3 (Limitless Sorcery) | HP 23/23 | AC 18 | DC 16 / atk +8 | SP 3 | slots 1st×4 2nd×2 *(ability scores pending confirm — see her sheet)*
-- **Party status:** Limenra full (no Inspiration). *More PCs to be added as sheets arrive.*
+- **Party:** 3 PCs at **level 6** (decided). Limenra — Weave-Savant Sorcerer (Limitless Sorcery) *(sheet still at L3; rebuild 3→6 pending her updated sheet)*. 2 more PCs to be imported.
+- **Party status:** pending final sheets.
 
 ## World State
 - **In-world date:** *(set session 1 — Calendar of Harptos, ~1490s DR)*
@@ -83,6 +83,9 @@ steering_notes: >
 - roll_mode: auto   *(per house-rules.md §6 — DM rolls and shows math, with the §4 resource-permission gate; player may flip to rolling their own PCs anytime)*
 - autosave: on
 - house_rules: rules/house-rules.md, rules/combat-rules.md, rules/narration-style.md  *(load all three at every /dm:dnd load and obey)*
+- dm_guide: dm-guide.md  *(baked-in running toolkit — read the Opening Sequence + Hexcrawl Procedure early; pull the rest per-act)*
+- starting_level: 6  | party_size: 3 PCs (no 4th/5th) | leveling: milestone
+- party_fixes: PENDING player choice — companion NPC and/or double-turns (see DM Notes)
 
 ## DM Notes (hidden from players)
 - **Acererak rarely fights;** the Tomb does the killing. Don't over-telegraph him early.
@@ -90,3 +93,6 @@ steering_notes: >
 - **Limenra's combat bindings are live** in `rules/combat-rules.md` (reactions, resource gate, OOC reflavor ban). Her power reflavors as spatial/dimensional manipulation — improvise per the Reflavor Engine in her sheet; the source inspirations are HARD-BANNED from prose.
 - **Open on Limenra's sheet:** confirm her 5 non-CHA ability scores and HP/Cling-to-Life value before session 1.
 - **Ruleset is 2024** (her build); convert ToA's 2014 stat blocks on the fly.
+- **Start level 6, 3 PCs, milestone.** Use the `dm-guide.md` Opening Sequence (boat → pirates → Zindar → cursed prince Jessamine → dino race → pick a guide). At level 6 the PCs are credible enough that Syndra/the prince recruiting them needs no excuse.
+- **Party-fix toggle (player to confirm):** companion guide-NPC and/or double-turns (two turns at separate initiative counts). If double-turns: give solo bosses +HP and legendary actions (note in `rules/combat-rules.md` when set).
+- **Scale up** pirate/jungle/Omu fights for a competent L6 trio; the Tomb is trap-based and needs little scaling.
