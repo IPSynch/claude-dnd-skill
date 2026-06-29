@@ -40,3 +40,11 @@ venv/
 
 # D&D in-repo data root: ignore transient runtime state (session locks, tokens)
 dnd-data/.runtime/
+
+# Game data (campaign text, third-party statblocks, rules) belongs ONLY in the
+# private play repo — never in this public fork. Kept on disk for local play but
+# not tracked here. The dnd-data/README.md doc remains tracked.
+dnd-data/campaigns/
+dnd-data/characters/
+dnd-data/rules/
+dnd-data/monster-manual/
