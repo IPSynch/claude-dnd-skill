@@ -112,6 +112,36 @@ def campaign_dir(name: str) -> pathlib.Path:
     return campaigns_dir() / name
 
 
+# ── Global reference layers (apply to every campaign) ─────────────────────
+# These live under the DATA root (beside campaigns/), NOT in the skill code
+# dir, because they are user-supplied content that must survive a plugin
+# update. Each is optional: the helper returns the path whether or not it
+# exists, so callers test `.exists()` (or `.is_dir()`) before using it.
+
+def rules_dir() -> pathlib.Path:
+    """Global DM rules directory (narration-style.md, house-rules.md,
+    combat-rules.md, …). Applied to every campaign at /dm:dnd load when present.
+    Override with DND_RULES_DIR. Default: <data-root>/rules."""
+    raw = os.environ.get("DND_RULES_DIR", "").strip()
+    return pathlib.Path(raw).expanduser() if raw else (_root() / "rules")
+
+
+def monster_library_dir() -> pathlib.Path:
+    """Global statblock library directory (the monster-manual/ corpus with
+    MASTER-INDEX.md, INDEX-BY-CR.md, by-type/, and per-source folders).
+    A reference layer for dropping creatures into any campaign's encounters.
+    Override with DND_MONSTER_LIBRARY. Default: <data-root>/monster-manual."""
+    raw = os.environ.get("DND_MONSTER_LIBRARY", "").strip()
+    return pathlib.Path(raw).expanduser() if raw else (_root() / "monster-manual")
+
+
+def campaign_supplements_dir(name: str) -> pathlib.Path:
+    """Per-campaign supplements directory — extra source material scoped to a
+    single campaign (e.g. ToA's 'Lost City of Mezro', 'Guide to ToA'), kept as
+    a lazy reference layer like source/. Default: <campaign>/supplements."""
+    return find_campaign(name) / "supplements"
+
+
 def find_campaign(name: str) -> pathlib.Path:
     """Locate a campaign directory, with legacy fallback and optional migration.
 
@@ -216,12 +246,24 @@ if __name__ == "__main__":
     if len(sys.argv) >= 3 and sys.argv[1] == "campaign-dir":
         print(find_campaign(sys.argv[2]))
         sys.exit(0)
+    if len(sys.argv) >= 2 and sys.argv[1] == "rules-dir":
+        print(rules_dir())
+        sys.exit(0)
+    if len(sys.argv) >= 2 and sys.argv[1] == "monster-library":
+        print(monster_library_dir())
+        sys.exit(0)
+    if len(sys.argv) >= 3 and sys.argv[1] == "campaign-supplements":
+        print(campaign_supplements_dir(sys.argv[2]))
+        sys.exit(0)
     print(
         "usage:\n"
         "  python3 paths.py campaign-ruleset <campaign-name>\n"
         "  python3 paths.py srd-path [2014|2024]\n"
         "  python3 paths.py runtime-dir\n"
-        "  python3 paths.py campaign-dir <campaign-name>",
+        "  python3 paths.py campaign-dir <campaign-name>\n"
+        "  python3 paths.py rules-dir\n"
+        "  python3 paths.py monster-library\n"
+        "  python3 paths.py campaign-supplements <campaign-name>",
         file=sys.stderr,
     )
     sys.exit(2)

@@ -385,6 +385,26 @@ lookup_with_level("sneak attack", category="feature", level=3)  # → level-reso
 
 **When to use:** combat (monster stat blocks before using them); spellcasting (range, components, duration, at-higher-levels); conditions (rule text before applying); loot and equipment; NPC generation (monster stat block as mechanical base). The display companion's character sheet modal handles lookups automatically during play — these CLI calls are for DM reference outside the UI.
 
+`lookup.py monster` covers the bundled SRD set. For anything beyond it — themed encounters, non-SRD creatures, bosses — use the **Statblock Library** below.
+
+---
+
+## Statblock Library — `monster-manual/` (all campaigns)
+
+A large, optional reference corpus (~2,977 statblocks from eight bestiaries: the 2024 MM, MM Expanded II/III, Tomes of Beasts 1–3, a 5.5e expanded book, and Mythic Encounters) for dropping creatures into any campaign's encounters — as-written or reflavored. It lives under the data root, **not** the skill code, so it survives plugin updates.
+
+```bash
+LIB=$(python3 ${CLAUDE_SKILL_DIR}/scripts/paths.py monster-library)   # resolve path
+test -d "$LIB" && echo "library present"                              # optional — skip if absent
+```
+
+**Use it seamlessly during play — the load step only registers it; pull on demand.** Three ways in (read its `README.md` once for the full convention):
+- **By name** → grep `MASTER-INDEX.md` (`Monster · Source · CR · Type · file · page`), then open the listed letter file and search `## <Name>`.
+- **By CR** (encounter-building) → `INDEX-BY-CR.md`, grouped by Challenge Rating.
+- **By creature type + traits** (the seamless path for "what fits this scene") → `by-type/<Type>.md` (e.g. `Undead.md`, `Fiend.md`, `Beast.md`, `Dragon.md`). Entries are grouped into `## CR N` and carry a tag line — `dmg:`, `immune:`/`resist:`, `melee`/`caster`, and a `MYTHIC` flag — so you can scan for the right creature at the right CR in one file. The full statblock is right there.
+
+**Workflow for "the scene calls for an encounter":** decide the creature *type* and a CR band appropriate to the party (use the campaign's encounter/XP math), open `by-type/<Type>.md`, scan the relevant `## CR` sections for the right traits, then deploy the statblock — keep the numbers (AC/HP/attacks/DCs/CR) and reflavor appearance/voice/origin to fit the setting (e.g. in Chult, reskin a generic predator as a jungle beast). Reflavoring needs no mechanical changes. Prefer a statblock whose format matches the campaign ruleset (the `2024-official-5e/` book is 2024-rules; the Tomes, MM Expanded II/III, and Mythic Encounters are 2014-rules), but any entry works once reflavored. Use `by-type` **MYTHIC** entries (or `mythic-encounters-5e/`) for boss/climax fights.
+
 ---
 
 ## Display Companion Setup (one-time)
